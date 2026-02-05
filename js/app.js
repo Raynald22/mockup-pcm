@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ThemeManager.init();
     SidebarManager.init();
     loadPage("dashboard");
+    DashboardManager.init();
 });
 
 const pages = {

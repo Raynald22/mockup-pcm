@@ -23,6 +23,7 @@
     height: 40px;
     border-radius: var(--radius);
     color: var(--color-text-secondary);
+    transition: background 0.15s ease, color 0.15s ease;
 }
 
 .btn-icon:hover { background: var(--color-bg-hover); color: var(--color-text-primary); }
