@@ -1,14 +1,15 @@
 :root {
-    --color-bg-primary: #F8F9FA;
-    --color-bg-sidebar: #0F1629;
-    --color-bg-sidebar-hover: rgba(255, 255, 255, 0.08);
-    --color-bg-sidebar-active: #1E2F6A;
+    --color-bg-primary: #EEF2F7;
+    --color-bg-sidebar: #FAFBFC;
+    --color-bg-sidebar-hover: #F1F5F9;
+    --color-bg-sidebar-active: #EFF6FF;
     --color-bg-header: #FFFFFF;
     --color-bg-hover: #F1F5F9;
 
     --color-text-primary: #1E293B;
     --color-text-secondary: #64748B;
-    --color-text-sidebar: #7592FF;
+    --color-text-sidebar-base: #64748B;
+    --color-text-sidebar-active: #3B82F6;
     --color-text-header: #1E293B;
 
     --color-primary: #3B82F6;
@@ -22,7 +23,7 @@
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.06);
 
-    --font-family: 'Inter', system-ui, sans-serif;
+    --font-family: 'Outfit', system-ui, sans-serif;
     --sidebar-width: 290px;
     --sidebar-collapsed-width: 72px;
     --header-height: 64px;
@@ -31,12 +32,16 @@
 
 [data-theme="dark"] {
     --color-bg-primary: #0F172A;
-    --color-bg-sidebar: #0B1120;
+    --color-bg-sidebar: #0F1629;
+    --color-bg-sidebar-hover: rgba(255, 255, 255, 0.08);
+    --color-bg-sidebar-active: #1E2F6A;
     --color-bg-header: #1E293B;
     --color-bg-hover: #334155;
 
     --color-text-primary: #F1F5F9;
     --color-text-secondary: #94A3B8;
+    --color-text-sidebar-base: #94A3B8;
+    --color-text-sidebar-active: #7592FF;
     --color-text-header: #F1F5F9;
     --color-border: #334155;
     --color-bg-card: #1E293B;

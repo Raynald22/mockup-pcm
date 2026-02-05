@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PCM Dashboard</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="assets/logo/ogya-logo.png" alt="OGYA">
+            </div>
+
+            <h1 class="login-title">Selamat Datang</h1>
+            <p class="login-subtitle">Masukkan kredensial Anda untuk masuk ke Dashboard Monitoring.</p>
+
+            <div class="login-error" id="login-error"></div>
+
+            <form id="login-form" autocomplete="off">
+                <div class="form-group">
+                    <div class="form-label-row">
+                        <label class="form-label" for="email">Email</label>
+                    </div>
+                    <div class="form-input-wrapper">
+                        <input type="email" id="email" class="form-input" placeholder="superadmin@example.com" value="management@ogya.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-label-row">
+                        <label class="form-label" for="password">Password</label>
+                        <a href="#" class="form-link" onclick="return false;">Lupa Password?</a>
+                    </div>
+                    <div class="form-input-wrapper">
+                        <input type="password" id="password" class="form-input" placeholder="••••••" value="123456" required>
+                        <button type="button" class="password-toggle" id="password-toggle" tabindex="-1">
+                            <svg class="icon-eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94">
+                                </path>
+                                <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19">
+                                </path>
+                                <line x1="1" y1="1" x2="23" y2="23"></line>
+                                <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"></path>
+                            </svg>
+                            <svg class="icon-eye" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                style="display:none">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" id="login-btn">Login</button>
+            </form>
+        </div>
+
+        <p class="login-footer">&copy; 2026 This application is for demo purposes only.</p>
+    </div>
+
+    <!-- Theme toggle FAB -->
+    <button class="theme-fab" id="theme-toggle" title="Toggle Theme">
+        <span class="icon-sun" style="display:none">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </span>
+        <span class="icon-moon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </span>
+    </button>
+
+    <script src="js/theme.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init theme
+            ThemeManager.init();
+
+            // Update FAB icon based on theme
+            function updateFabIcon() {
+                const theme = document.documentElement.getAttribute('data-theme');
+                const sun = document.querySelector('.theme-fab .icon-sun');
+                const moon = document.querySelector('.theme-fab .icon-moon');
+                if (theme === 'dark') {
+                    sun.style.display = 'none';
+                    moon.style.display = 'flex';
+                } else {
+                    sun.style.display = 'flex';
+                    moon.style.display = 'none';
+                }
+            }
+            updateFabIcon();
+
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                ThemeManager.toggle();
+                updateFabIcon();
+            });
+
+            // If already logged in, go to dashboard
+            if (AuthManager.isLoggedIn()) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Password toggle
+            const pwInput = document.getElementById('password');
+            const pwToggle = document.getElementById('password-toggle');
+            const iconEye = pwToggle.querySelector('.icon-eye');
+            const iconEyeOff = pwToggle.querySelector('.icon-eye-off');
+
+            pwToggle.addEventListener('click', () => {
+                const isPassword = pwInput.type === 'password';
+                pwInput.type = isPassword ? 'text' : 'password';
+                iconEye.style.display = isPassword ? 'block' : 'none';
+                iconEyeOff.style.display = isPassword ? 'none' : 'block';
+            });
+
+            // Login form
+            const form = document.getElementById('login-form');
+            const errorEl = document.getElementById('login-error');
+            const loginBtn = document.getElementById('login-btn');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                errorEl.classList.remove('show');
+
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                if (!email || !password) {
+                    errorEl.textContent = 'Mohon isi email dan password.';
+                    errorEl.classList.add('show');
+                    return;
+                }
+
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Memproses...';
+
+                // Simulate slight delay for UX
+                setTimeout(() => {
+                    const result = AuthManager.login(email, password);
+                    if (result.success) {
+                        window.location.href = 'index.html';
+                    } else {
+                        errorEl.textContent = result.message;
+                        errorEl.classList.add('show');
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Login';
+                    }
+                }, 400);
+            });
+        });
+    </script>
+</body>
+
+</html>
