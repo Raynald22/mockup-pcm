@@ -17,4 +17,5 @@
     padding: 24px;
     overflow-y: auto;
     background: var(--color-bg-primary);
+    transition: opacity 0.15s ease;
 }

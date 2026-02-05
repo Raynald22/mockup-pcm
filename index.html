@@ -29,7 +29,7 @@
                 <ul class="nav-list">
                     <!-- Dashboard -->
                     <li class="nav-item active">
-                        <a href="index.html" class="nav-link">
+                        <a onclick="loadPage('dashboard'); return false;" class="nav-link">
                             <span class="nav-icon">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -64,14 +64,14 @@
                         </a>
                         <ul class="nav-submenu">
                             <li class="nav-item">
-                                <a href="./pages/pof.html" class="nav-link">
+                                <a href="#" onclick="loadPage('pof'); return false;" class="nav-link">
                                     <span class="nav-label">POF (Payment Order Form)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="./pages/pcv.html" class="nav-link">
+                                <ahref="#" onclick="loadPage('pcv'); return false;" class="nav-link">
                                     <span class="nav-label">PCV (Petty Cash Voucher)</span>
-                                </a>
+                                </ahref=>
                             </li>
                         </ul>
                     </li>
@@ -149,7 +149,7 @@
         </header>
 
         <!-- MAIN CONTENT -->
-        <main class="main-content">
+        <main class="main-content" id="main-content">
             <div class="content-placeholder">
                 <h1>Dashboard</h1>
                 <p>Project Cost Monitoring - Main content area. Charts, cards, and tables will be added here.</p>
