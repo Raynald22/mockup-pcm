@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Auth check — redirect to login if not authenticated
+    if (!AuthManager.requireAuth()) return;
+
     ThemeManager.init();
     SidebarManager.init();
+    updateUserInfo();
     loadPage("dashboard");
 });
 
@@ -9,6 +13,23 @@ const pages = {
   pof: "pages/pof.html",
   pcv: "pages/pcv.html"
 };
+
+function updateUserInfo() {
+    const user = AuthManager.getUser();
+    if (!user) return;
+
+    const initials = user.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+    const roleName = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+
+    const initialsEl = document.querySelector('.user-initials');
+    if (initialsEl) initialsEl.textContent = initials;
+
+    const nameEl = document.querySelector('.user-name');
+    if (nameEl) nameEl.textContent = user.name;
+
+    const roleEl = document.querySelector('.user-role');
+    if (roleEl) roleEl.textContent = roleName;
+}
 
 async function loadPage(page) {
   const main = document.getElementById("main-content");
@@ -32,6 +53,9 @@ async function loadPage(page) {
       if (page === 'dashboard') {
         DashboardManager.init();
       }
+
+      // Apply role-based UI after page renders
+      AuthManager.applyRoleUI();
     }, 120);
 
   } catch (err) {
@@ -40,4 +64,3 @@ async function loadPage(page) {
     main.style.opacity = 1;
   }
 }
-
