@@ -2,16 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ThemeManager.init();
     SidebarManager.init();
     loadPage("dashboard");
-    DashboardManager.init();
 });
 
 const pages = {
-  dashboard: `
-    <div class="content-placeholder">
-      <h1>Dashboard</h1>
-      <p>Project Cost Monitoring - Main content area.</p>
-    </div>
-  `,
+  dashboard: "pages/dashboard.html",
   pof: "pages/pof.html",
   pcv: "pages/pcv.html"
 };
@@ -33,10 +27,16 @@ async function loadPage(page) {
     setTimeout(() => {
       main.innerHTML = html;
       main.style.opacity = 1;
+
+      // Re-initialize dashboard scripts if we are on the dashboard
+      if (page === 'dashboard') {
+        DashboardManager.init();
+      }
     }, 120);
 
   } catch (err) {
-    main.innerHTML = "<h1>404 - Page not found</h1>";
+    console.error(err);
+    main.innerHTML = "<h1>404 - Page not found</h1><p>Pastikan Anda membuka file ini menggunakan <strong>Live Server</strong> atau Local Server, bukan klik ganda file HTML langsung.</p>";
     main.style.opacity = 1;
   }
 }
