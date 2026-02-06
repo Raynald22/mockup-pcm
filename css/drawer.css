@@ -1,0 +1,460 @@
+/* Drawer Styles - Theme Responsive */
+:root {
+    --drawer-bg: var(--color-bg-header);
+    --drawer-text-main: var(--color-text-primary);
+    --drawer-text-muted: var(--color-text-secondary);
+    --drawer-border: var(--color-border);
+    --drawer-primary: var(--color-primary);
+    --drawer-input-bg: var(--color-bg-card);
+}
+
+/* Specific overrides if needed for deeper theme cohesion */
+[data-theme="dark"] {
+    --drawer-input-bg: #1E293B;
+    /* Slightly lighter than background for definition */
+}
+
+.drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    /* backdrop-filter: blur(2px); */
+}
+
+.drawer-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 500px;
+    max-width: 95%;
+    height: 100%;
+    background-color: var(--drawer-bg);
+    z-index: 1001;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+[data-theme="dark"] .drawer {
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.drawer.active {
+    right: 0;
+}
+
+.drawer-header {
+    padding: 24px 24px 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.drawer-header-content h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--drawer-text-main);
+    margin: 0 0 8px 0;
+}
+
+.drawer-header-content p {
+    font-size: 0.875rem;
+    color: var(--drawer-text-muted);
+    margin: 0;
+}
+
+.btn-close-drawer {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--drawer-text-muted);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.btn-close-drawer:hover {
+    color: var(--drawer-text-main);
+}
+
+.drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    min-height: 0;
+    /* Common flex-scroll fix */
+}
+
+/* Custom Scrollbar */
+.drawer-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.drawer-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.drawer-content::-webkit-scrollbar-thumb {
+    background: var(--color-text-secondary);
+    opacity: 0.5;
+    border-radius: 4px;
+}
+
+.drawer-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-primary);
+}
+
+.drawer-footer {
+    padding: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background-color: var(--drawer-bg);
+}
+
+/* Form Styling */
+.form-section {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--drawer-text-main);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--drawer-text-main);
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--drawer-border);
+    border-radius: 12px;
+    background-color: var(--drawer-input-bg);
+    color: var(--drawer-text-main);
+    font-size: 1rem;
+    font-family: var(--font-family);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--drawer-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.form-control::placeholder {
+    color: var(--drawer-text-muted);
+    opacity: 0.6;
+    font-family: var(--font-family);
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239CA3AF'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+[data-theme="dark"] select.form-control {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* Button Styles */
+.btn-simpan {
+    background-color: var(--drawer-primary);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    min-width: 100px;
+}
+
+.btn-simpan:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.btn-batal {
+    background-color: transparent;
+    border: 1px solid var(--drawer-border);
+    color: var(--drawer-text-main);
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    min-width: 100px;
+}
+
+.btn-batal:hover {
+    background-color: var(--color-bg-hover);
+}
+
+/* Form Helper Classes */
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-btn {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--drawer-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Lookup Modal Styles */
+.lookup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 5000;
+    /* Ensure it's above everything including drawers */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.lookup-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lookup-modal {
+    background-color: var(--color-bg-card);
+    width: 950px;
+    /* Lebar lebih proporsional */
+    height: 580px;
+    /* Tinggi yang pas untuk 4-5 baris data */
+    max-width: 95%;
+    max-height: 90vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.lookup-backdrop.active .lookup-modal {
+    transform: translateY(0);
+}
+
+.lookup-header {
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lookup-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.btn-close-lookup {
+    background: none;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.btn-close-lookup:hover {
+    color: #475569;
+}
+
+.lookup-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Search bar styling */
+.lookup-search-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.lookup-search-select {
+    width: 150px;
+    padding: 10px 15px;
+    padding-right: 35px;
+    /* Beri ruang untuk ikon agar tidak menumpuk teks */
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-bg-card);
+    color: var(--color-text-primary);
+    font-family: var(--font-family);
+    appearance: none;
+    /* Hilangkan ikon default browser */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    /* Mengatur jarak ikon 15px dari kanan */
+    background-size: 16px;
+}
+
+.lookup-search-input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    font-family: var(--font-family);
+}
+
+.lookup-search-input:focus {
+    outline: none;
+    border-color: var(--drawer-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.lookup-search-select:focus {
+    outline: none;
+    border-color: var(--drawer-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.btn-lookup-search {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.btn-lookup-search:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* TABLE STYLING - THE VITAL PART */
+.lookup-table-container {
+    flex: 1;
+    min-height: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lookup-table-scroll {
+    overflow: auto;
+    flex: 1;
+    width: 100%;
+}
+
+.lookup-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.lookup-table th {
+    background-color: var(--color-bg-primary);
+    padding: 16px 20px;
+    text-align: center;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    font-size: 0.875rem;
+}
+
+.lookup-table td {
+    padding: 20px 15px;
+    /* Sesuai screenshot, lebih renggang */
+    text-align: center;
+    /* Sesuai screenshot */
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-card);
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.lookup-table tr:hover td {
+    background-color: var(--color-bg-hover);
+    cursor: pointer;
+}
+
+[data-theme="dark"] .lookup-table th {
+    background-color: var(--color-bg-primary);
+}
+
+/* Custom Scrollbar */
+.lookup-table-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.lookup-table-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .lookup-table-scroll::-webkit-scrollbar-thumb {
+    background: #475569;
+}

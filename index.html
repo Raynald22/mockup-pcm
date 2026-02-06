@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/drawer.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,9 +203,41 @@
         </main>
     </div>
 
+    <!-- DRAWER FOR FORMS -->
+    <div class="drawer-backdrop" id="drawer-backdrop">
+        <div class="drawer" id="drawer">
+            <div class="drawer-header">
+                <div class="drawer-header-content">
+                    <h2 id="drawer-title">Title</h2>
+                    <p id="drawer-subtitle">Subtitle</p>
+                </div>
+                <button class="btn-close-drawer" id="btn-close-drawer" aria-label="Close drawer">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="drawer-content" id="drawer-content">
+                <!-- Content will be loaded here -->
+            </div>
+            <div class="drawer-footer" id="drawer-footer">
+                <button class="btn-batal" id="btn-cancel-drawer">Batal</button>
+                <button class="btn-simpan" id="btn-save-drawer">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOOKUP MODAL -->
+    <div class="lookup-backdrop" id="lookup-backdrop">
+        <div id="lookup-modal-container"></div>
+    </div>
+
     <script src="js/data.js" defer></script>
     <script src="js/theme.js" defer></script>
     <script src="js/sidebar.js" defer></script>
+    <script src="js/drawer.js" defer></script>
     <script src="js/dashboard.js" defer></script>
     <script src="js/pof.js" defer></script>
     <script src="js/pcv.js" defer></script>

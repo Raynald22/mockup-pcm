@@ -13,6 +13,113 @@ const PofManager = (() => {
             updatePlaceholder();
             sel.addEventListener('change', updatePlaceholder);
         }
+
+        // Handle "+ Add POF" button
+        const addBtn = document.querySelector('.add-pof-btn');
+        if (addBtn) {
+            addBtn.onclick = () => {
+                DrawerManager.open({
+                    title: 'Input POF (Payment Order Form)',
+                    subtitle: 'Isi form untuk membuat petty cash voucher baru.',
+                    contentHtml: `
+                        <form id="pcv-form">
+                            <!-- POF Information Section -->
+                            <div class="form-section">
+                                <div class="form-group">
+                                    <label for="no_pof">No. POF</label>
+                                    <input type="text" id="no_pof" class="form-control" placeholder="Input POF number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pof_date">POF Date*</label>
+                                    <input type="date" id="pof_date" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="company_name">Company Name</label>
+                                    <input type="text" id="company_name" class="form-control" placeholder="Input company name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="departement">Departement</label>
+                                    <input type="text" id="departement" class="form-control" placeholder="Input department">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="employee_id">Employee ID*</label>
+                                    <input type="text" id="employee_id" class="form-control" value="12712" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="project">Project*</label>
+                                    <div class="input-with-icon">
+                                        <input type="text" id="project" class="form-control" placeholder="Select project" required>
+                                        <button type="button" class="input-icon-btn"
+                                            onclick="LookupManager.open('Lookup Project', 'pages/lookup-project.html', (data) => { document.getElementById('project').value = data.number })">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="approved_to">Approved To</label>
+                                    <select id="approved_to" class="form-control">
+                                        <option value="">Select approver</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Paid To Section -->
+                            <div class="form-section" style="padding-top: 20px;">
+                                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; color: var(--drawer-text-main);">Paid To
+                                </h3>
+
+                                <div class="form-group">
+                                    <label for="bank">Bank</label>
+                                    <select id="bank" class="form-control">
+                                        <option value="">Select Bank</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="account_number">Account Number</label>
+                                    <input type="text" id="account_number" class="form-control" placeholder="Input account number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="account_name">Account Name</label>
+                                    <input type="text" id="account_name" class="form-control" placeholder="Input account name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="amount">Amount to be Paid</label>
+                                    <input type="number" id="amount" class="form-control" placeholder="Input amount">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="due_date">Due Date</label>
+                                    <input type="date" id="due_date" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control" rows="3" placeholder="Input description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    `,
+                    onSave: () => {
+                        console.log('Saving POF data...');
+                        // Implement save logic here if needed
+                        DrawerManager.close();
+                    }
+                });
+            };
+        }
     }
 
     function formatRp(num) {
@@ -124,36 +231,36 @@ const PofManager = (() => {
             <div class="table-footer">
                 <div class="table-pager">
                     <div class="paginator" role="navigation" aria-label="Pagination">
-                        <button class="pager-btn pager-first" ${state.page===1? 'disabled':''} title="First">
+                        <button class="pager-btn pager-first" ${state.page === 1 ? 'disabled' : ''} title="First">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 18L13 12l6-6"></path><path d="M11 18L5 12l6-6"></path></svg>
                         </button>
-                        <button class="pager-btn pager-prev" ${state.page===1? 'disabled':''} title="Previous">
+                        <button class="pager-btn pager-prev" ${state.page === 1 ? 'disabled' : ''} title="Previous">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
                         </button>
                         <div class="pager-pages">
                             ${(() => {
-                                const pages = [];
-                                const windowSize = 5;
-                                let startPage = Math.max(1, state.page - Math.floor(windowSize/2));
-                                let endPage = Math.min(totalPages, startPage + windowSize - 1);
-                                if (endPage - startPage + 1 < windowSize) startPage = Math.max(1, endPage - windowSize + 1);
-                                for (let p = startPage; p <= endPage; p++) {
-                                    pages.push(`<button class="pager-btn pager-page ${state.page===p? 'current':''}" data-page="${p}" aria-label="Page ${p}">${p}</button>`);
-                                }
-                                return pages.join('');
-                            })()}
+                const pages = [];
+                const windowSize = 5;
+                let startPage = Math.max(1, state.page - Math.floor(windowSize / 2));
+                let endPage = Math.min(totalPages, startPage + windowSize - 1);
+                if (endPage - startPage + 1 < windowSize) startPage = Math.max(1, endPage - windowSize + 1);
+                for (let p = startPage; p <= endPage; p++) {
+                    pages.push(`<button class="pager-btn pager-page ${state.page === p ? 'current' : ''}" data-page="${p}" aria-label="Page ${p}">${p}</button>`);
+                }
+                return pages.join('');
+            })()}
                         </div>
-                        <button class="pager-btn pager-next" ${state.page===totalPages? 'disabled':''} title="Next">
+                        <button class="pager-btn pager-next" ${state.page === totalPages ? 'disabled' : ''} title="Next">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
                         </button>
-                        <button class="pager-btn pager-last" ${state.page===totalPages? 'disabled':''} title="Last">
+                        <button class="pager-btn pager-last" ${state.page === totalPages ? 'disabled' : ''} title="Last">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18l6-6-6-6"></path><path d="M13 18l6-6-6-6"></path></svg>
                         </button>
                     </div>
                     <div class="pager-controls">
                         Lines per page
                         <select class="page-size-select" aria-label="Rows per page">
-                            ${[5,10,25,50].map(s => `<option value="${s}" ${state.pageSize===s? 'selected':''}>${s}</option>`).join('')}
+                            ${[5, 10, 25, 50].map(s => `<option value="${s}" ${state.pageSize === s ? 'selected' : ''}>${s}</option>`).join('')}
                         </select>
                     </div>
                 </div>
