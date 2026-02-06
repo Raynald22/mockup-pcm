@@ -51,6 +51,9 @@ const PcvManager = (() => {
         const el = document.getElementById(id);
         if (!el) return;
 
+        // Ensure `data` is an array to avoid runtime errors when it's undefined
+        if (!Array.isArray(data)) data = [];
+
         // basic pagination state per table
         window._pofState = window._pofState || {};
         const state = window._pofState[id] || { page: 1, pageSize: 10 };
@@ -144,7 +147,7 @@ const PcvManager = (() => {
                         </button>
                     </div>
                     <div class="pager-controls">
-                        Lines per page
+                        Pages
                         <select class="page-size-select" aria-label="Rows per page">
                             ${[5,10,25,100].map(s => `<option value="${s}" ${state.pageSize===s? 'selected':''}>${s}</option>`).join('')}
                         </select>
@@ -152,6 +155,41 @@ const PcvManager = (() => {
                 </div>
             </div>
         `;
+
+        // Enable drag-to-scroll for table
+        const wrapper = el.querySelector('.table-wrapper');
+        if (wrapper) {
+            let isDown = false;
+            let startX = 0;
+            let scrollLeft = 0;
+
+            wrapper.addEventListener('mousedown', (e) => {
+                // Only drag if clicking on the table area, not on interactive elements
+                if (e.target.closest('button, input, select')) return;
+                isDown = true;
+                wrapper.classList.add('dragging');
+                startX = e.pageX - wrapper.getBoundingClientRect().left;
+                scrollLeft = wrapper.scrollLeft;
+            });
+
+            wrapper.addEventListener('mouseleave', () => {
+                isDown = false;
+                wrapper.classList.remove('dragging');
+            });
+
+            wrapper.addEventListener('mouseup', () => {
+                isDown = false;
+                wrapper.classList.remove('dragging');
+            });
+
+            wrapper.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - wrapper.getBoundingClientRect().left;
+                const walk = (x - startX) * 1.2;
+                wrapper.scrollLeft = scrollLeft - walk;
+            });
+        }
 
         // Attach dropdown behavior for action buttons.
         // Ensure we don't add duplicate global listeners when re-rendering.
@@ -185,8 +223,17 @@ const PcvManager = (() => {
                 const row = item.closest('tr');
                 if (!row) return;
                 const rowIndex = Array.from(row.parentElement.children).indexOf(row);
-                // emit or handle actions here - for now just log
-                console.log('POF action', action, 'on row', rowIndex);
+                
+                // Show confirmation dialog for delete action
+                if (action === 'delete') {
+                    showDeleteConfirmation(() => {
+                        console.log('PCV action', action, 'on row', rowIndex);
+                    });
+                } else {
+                    // Note to Cindy: tambahin action lainnya di sini ya cin
+                    console.log('PCV action', action, 'on row', rowIndex);
+                }
+                
                 // close dropdown after action
                 const dd = item.closest('.action-dropdown');
                 if (dd) dd.classList.remove('show');
@@ -215,3 +262,39 @@ const PcvManager = (() => {
 
     return { init };
 })();
+
+// Global delete confirmation modal function (shared with pof.js)
+function showDeleteConfirmation(onConfirm) {
+    let modal = document.getElementById('delete-confirm-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'delete-confirm-modal';
+        modal.className = 'delete-modal-overlay';
+        modal.innerHTML = `
+            <div class="delete-modal">
+                <div class="delete-modal-title">Confirmation</div>
+                <div class="delete-modal-message">Are you sure you want to delete this data?</div>
+                <div class="delete-modal-actions">
+                    <button class="btn-cancel" type="button">Cancel</button>
+                    <button class="btn-delete" type="button">Delete</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    modal.classList.add('show');
+    const cancelBtn = modal.querySelector('.btn-cancel');
+    const deleteBtn = modal.querySelector('.btn-delete');
+    
+    const closeModal = () => modal.classList.remove('show');
+    
+    cancelBtn.onclick = closeModal;
+    deleteBtn.onclick = () => {
+        closeModal();
+        onConfirm();
+    };
+    modal.onclick = (e) => {
+        if (e.target === modal) closeModal();
+    };
+}
