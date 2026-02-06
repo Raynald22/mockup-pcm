@@ -415,9 +415,11 @@ select.form-control {
     width: 950px;
     /* Lebar lebih proporsional */
     height: auto;
+    min-height: 200px;
     /* Tinggi yang pas untuk 4-5 baris data */
     max-width: 95%;
-    max-height: 80vh;
+    max-height: 85vh;
+    /* Slightly increased for better view */
     border-radius: 12px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -464,6 +466,8 @@ select.form-control {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    flex: 1;
+    /* Restore flex: 1 to allow expansion */
     min-height: 0;
     overflow-y: auto;
 }
