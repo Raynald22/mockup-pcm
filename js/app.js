@@ -34,6 +34,17 @@ function updateUserInfo() {
 async function loadPage(page) {
   const main = document.getElementById("main-content");
 
+  // Update active nav item
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const activeLink = document.querySelector(`[onclick*="loadPage('${page}')"]`);
+  if (activeLink) {
+    const navItem = activeLink.closest('.nav-item');
+    if (navItem) navItem.classList.add('active');
+    // Expand parent submenu if it's a sub-item
+    const expandable = activeLink.closest('.nav-item-expandable');
+    if (expandable) expandable.classList.add('expanded');
+  }
+
   try {
     main.style.opacity = 0;
 
