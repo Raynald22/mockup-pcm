@@ -156,6 +156,41 @@ const PcvManager = (() => {
             </div>
         `;
 
+        // Enable drag-to-scroll for table
+        const wrapper = el.querySelector('.table-wrapper');
+        if (wrapper) {
+            let isDown = false;
+            let startX = 0;
+            let scrollLeft = 0;
+
+            wrapper.addEventListener('mousedown', (e) => {
+                // Only drag if clicking on the table area, not on interactive elements
+                if (e.target.closest('button, input, select')) return;
+                isDown = true;
+                wrapper.classList.add('dragging');
+                startX = e.pageX - wrapper.getBoundingClientRect().left;
+                scrollLeft = wrapper.scrollLeft;
+            });
+
+            wrapper.addEventListener('mouseleave', () => {
+                isDown = false;
+                wrapper.classList.remove('dragging');
+            });
+
+            wrapper.addEventListener('mouseup', () => {
+                isDown = false;
+                wrapper.classList.remove('dragging');
+            });
+
+            wrapper.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - wrapper.getBoundingClientRect().left;
+                const walk = (x - startX) * 1.2;
+                wrapper.scrollLeft = scrollLeft - walk;
+            });
+        }
+
         // Attach dropdown behavior for action buttons.
         // Ensure we don't add duplicate global listeners when re-rendering.
         const addGlobalListeners = !window._pofDropdownListenersAdded;
