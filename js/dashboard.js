@@ -114,20 +114,18 @@ const DashboardManager = (() => {
         ];
     }
 
-    function renderTable(id, data, columns, rowsPerPage) {
+    function renderTable(id, data, columns, defaultPerPage = 5) {
         const el = document.getElementById(id);
         if (!el) return;
 
-        let currentPage = 1;
-        const totalPages = Math.ceil(data.length / rowsPerPage);
+        const perPageOptions = [5, 10, 15, 20];
+        let rowsPerPage = defaultPerPage;
 
         function render() {
-            const start = (currentPage - 1) * rowsPerPage;
-            const end = Math.min(start + rowsPerPage, data.length);
-            const pageData = data.slice(start, end);
+            const displayData = data.slice(0, rowsPerPage);
 
             const thead = columns.map(c => `<th>${c.label}</th>`).join('');
-            const tbody = pageData.map(row => {
+            const tbody = displayData.map(row => {
                 const cells = columns.map(c => {
                     const val = c.format ? c.format(row[c.key]) : row[c.key];
                     return `<td>${val}</td>`;
@@ -135,27 +133,9 @@ const DashboardManager = (() => {
                 return `<tr>${cells}</tr>`;
             }).join('');
 
-            let paginationHtml = '';
-            if (totalPages > 1) {
-                const prevDisabled = currentPage === 1 ? 'disabled' : '';
-                const nextDisabled = currentPage === totalPages ? 'disabled' : '';
-                let pages = '';
-                for (let i = 1; i <= totalPages; i++) {
-                    const activeClass = i === currentPage ? 'active' : '';
-                    pages += `<button class="page-btn ${activeClass}" data-page="${i}">${i}</button>`;
-                }
-                paginationHtml = `
-                    <div class="pagination">
-                        <button class="page-btn page-nav" data-page="prev" ${prevDisabled}>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-                        </button>
-                        ${pages}
-                        <button class="page-btn page-nav" data-page="next" ${nextDisabled}>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                        </button>
-                    </div>
-                `;
-            }
+            const perPageSelect = perPageOptions.map(n =>
+                `<option value="${n}" ${n === rowsPerPage ? 'selected' : ''}>${n}</option>`
+            ).join('');
 
             el.innerHTML = `
                 <table>
@@ -163,19 +143,18 @@ const DashboardManager = (() => {
                     <tbody>${tbody}</tbody>
                 </table>
                 <div class="table-footer">
-                    <span>${start + 1}-${end} dari ${data.length}</span>
-                    ${paginationHtml}
+                    <div class="table-footer-left">
+                        <span class="per-page-label">Tampilkan</span>
+                        <select class="per-page-select">${perPageSelect}</select>
+                        <span class="per-page-label">baris</span>
+                    </div>
+                    <span class="table-info">Menampilkan ${displayData.length} dari ${data.length}</span>
                 </div>
             `;
 
-            el.querySelectorAll('.page-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const page = btn.dataset.page;
-                    if (page === 'prev' && currentPage > 1) currentPage--;
-                    else if (page === 'next' && currentPage < totalPages) currentPage++;
-                    else if (page !== 'prev' && page !== 'next') currentPage = parseInt(page);
-                    render();
-                });
+            el.querySelector('.per-page-select')?.addEventListener('change', (e) => {
+                rowsPerPage = parseInt(e.target.value);
+                render();
             });
         }
 
