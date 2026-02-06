@@ -31,7 +31,7 @@ const DashboardManager = (() => {
         }
 
         barEl.innerHTML = `
-            <div class="segment" style="width:${invPct}%;background:linear-gradient(135deg,#3B82F6,#2563EB)">
+            <div class="segment" style="width:${invPct}%;background:linear-gradient(135deg,#EAB308,#CA8A04)">
                 ${parseFloat(invPct) > 10 ? formatRp(invoice) : ''}
                 <span class="segment-tooltip">Invoice: ${formatRp(invoice)} (${invPct}%)</span>
             </div>
@@ -48,7 +48,7 @@ const DashboardManager = (() => {
         if (legendEl) {
             legendEl.innerHTML = `
                 <div class="legend-item">
-                    <span class="dot" style="background:#3B82F6"></span>
+                    <span class="dot" style="background:#EAB308"></span>
                     <span class="legend-label">Invoice</span>
                 </div>
                 <div class="legend-item">
@@ -56,7 +56,7 @@ const DashboardManager = (() => {
                     <span class="legend-label">Revenue</span>
                 </div>
                 <div class="legend-item">
-                    <span class="dot" style="background:var(--color-text-secondary)"></span>
+                    <span class="dot" style="background:#94A3B8"></span>
                     <span class="legend-label">Target</span>
                 </div>
             `;
@@ -69,8 +69,8 @@ const DashboardManager = (() => {
 
         const cardMeta = [
             {
-                iconClass: 'icon-blue',
-                accentClass: 'accent-blue',
+                iconClass: 'icon-slate',
+                accentClass: 'accent-slate',
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>'
             },
             {
@@ -79,8 +79,8 @@ const DashboardManager = (() => {
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>'
             },
             {
-                iconClass: 'icon-purple',
-                accentClass: 'accent-purple',
+                iconClass: 'icon-yellow',
+                accentClass: 'accent-yellow',
                 icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'
             }
         ];

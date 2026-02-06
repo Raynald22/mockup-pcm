@@ -12,14 +12,14 @@ const MOCK_DATA = {
     ],
 
     projects: [
-        { name: 'PPON 2025 PN Makassar', budget: 800000000, spent: 150000000, remaining: 650000000 },
-        { name: 'PPON 2025 PN Jakarta Utara', budget: 1200000000, spent: 0, remaining: 1200000000 },
-        { name: 'PPON 2025 PN Bekasi', budget: 950000000, spent: 0, remaining: 950000000 },
-        { name: 'PPON 2025 PN Surabaya', budget: 750000000, spent: 200000000, remaining: 550000000 },
-        { name: 'PPON 2025 PN Bandung', budget: 600000000, spent: 100000000, remaining: 500000000 },
-        { name: 'PPON 2025 PN Semarang', budget: 500000000, spent: 75000000, remaining: 425000000 },
-        { name: 'PPON 2025 PN Medan', budget: 900000000, spent: 300000000, remaining: 600000000 },
-        { name: 'PPON 2025 PN Denpasar', budget: 650000000, spent: 50000000, remaining: 600000000 }
+        { name: 'OGYA 2025 PN Makassar', budget: 800000000, spent: 150000000, remaining: 650000000 },
+        { name: 'OGYA 2025 PN Jakarta Utara', budget: 1200000000, spent: 0, remaining: 1200000000 },
+        { name: 'OGYA 2025 PN Bekasi', budget: 950000000, spent: 0, remaining: 950000000 },
+        { name: 'OGYA 2025 PN Surabaya', budget: 750000000, spent: 200000000, remaining: 550000000 },
+        { name: 'OGYA 2025 PN Bandung', budget: 600000000, spent: 100000000, remaining: 500000000 },
+        { name: 'OGYA 2025 PN Semarang', budget: 500000000, spent: 75000000, remaining: 425000000 },
+        { name: 'OGYA 2025 PN Medan', budget: 900000000, spent: 300000000, remaining: 600000000 },
+        { name: 'OGYA 2025 PN Denpasar', budget: 650000000, spent: 50000000, remaining: 600000000 }
     ],
 
     invoices: [
