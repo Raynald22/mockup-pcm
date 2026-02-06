@@ -23,8 +23,11 @@ const PofManager = (() => {
                     subtitle: 'Isi form untuk membuat petty cash voucher baru.',
                     contentHtml: `
                         <form id="pcv-form">
-                            <!-- POF Information Section -->
-                            <div class="form-section">
+                            <div class="drawer-card">
+                            <!-- POF Information Panel -->
+                            <div class="details-section">
+                                <div class="details-section-label">POF Information</div>
+                                
                                 <div class="form-group">
                                     <label for="no_pof">No. POF</label>
                                     <input type="text" id="no_pof" class="form-control" placeholder="Input POF number">
@@ -73,11 +76,10 @@ const PofManager = (() => {
                                 </div>
                             </div>
 
-                            <!-- Paid To Section -->
-                            <div class="form-section" style="padding-top: 20px;">
-                                <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; color: var(--drawer-text-main);">Paid To
-                                </h3>
-
+                            <!-- Paid To Panel -->
+                            <div class="details-section" style="margin-bottom: 24px;">
+                                <div class="details-section-label">Paid To</div>
+                                
                                 <div class="form-group">
                                     <label for="bank">Bank</label>
                                     <select id="bank" class="form-control">
@@ -114,38 +116,40 @@ const PofManager = (() => {
                                     <label for="description">Description</label>
                                     <textarea id="description" class="form-control" rows="3" placeholder="Input description"></textarea>
                                 </div>
+                            </div>
 
-                                <!-- POF Details Section -->
-                                <div class="details-section">
-                                    <div class="details-section-label">POF Details</div>
-                                    <div class="details-header">
-                                        <button type="button" class="btn-add-detail" id="btn-add-account-code">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                            </svg>
-                                            Account Code
-                                        </button>
-                                    </div>
-                                    <div class="details-table-container">
-                                        <table class="details-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Account Code</th>
-                                                    <th>Description</th>
-                                                    <th>Amount</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="pof-details-body">
-                                                <tr class="empty-row">
-                                                    <td colspan="5">Data Kosong</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <!-- POF Details Section (Below the Information Panel) -->
+                            <div class="details-section">
+                                <div class="details-section-label">POF Details</div>
+                                <div class="details-header">
+                                    <button type="button" class="btn-add-detail" id="btn-add-account-code">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                        Account Code
+                                    </button>
                                 </div>
+                                <div class="details-table-container">
+                                    <table class="details-table">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Account Code</th>
+                                                <th>Description</th>
+                                                <th>Amount</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="pof-details-body">
+                                            <tr class="empty-row">
+                                                <td colspan="5">Data Kosong</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                             </div>
                         </form>
                     `,
@@ -249,9 +253,9 @@ const PofManager = (() => {
             { key: 'dueDate', label: 'Due Date', format: formatDate },
             { key: 'projectNumber', label: 'Project Number' },
             { key: 'projectName', label: 'Project Name' },
-            { key: 'amount', label: 'Amount', format: formatRp  },
+            { key: 'amount', label: 'Amount', format: formatRp },
             { key: 'statusDescription', label: 'Status', format: formatPaymentStatus },
-            { key: 'paymentStatusDesc', label: 'Status Payment'},
+            { key: 'paymentStatusDesc', label: 'Status Payment' },
             { key: 'documentStatus', label: 'Document', format: formatDocumentStatus },
             { key: 'action', label: 'Actions' },
         ];
