@@ -354,7 +354,7 @@ const PofManager = (() => {
                         </button>
                     </div>
                     <div class="pager-controls">
-                        Lines per page
+                        Pages
                         <select class="page-size-select" aria-label="Rows per page">
                             ${[5, 10, 25, 50].map(s => `<option value="${s}" ${state.pageSize === s ? 'selected' : ''}>${s}</option>`).join('')}
                         </select>

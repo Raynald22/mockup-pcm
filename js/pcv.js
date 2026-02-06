@@ -51,6 +51,9 @@ const PcvManager = (() => {
         const el = document.getElementById(id);
         if (!el) return;
 
+        // Ensure `data` is an array to avoid runtime errors when it's undefined
+        if (!Array.isArray(data)) data = [];
+
         // basic pagination state per table
         window._pofState = window._pofState || {};
         const state = window._pofState[id] || { page: 1, pageSize: 10 };
@@ -144,7 +147,7 @@ const PcvManager = (() => {
                         </button>
                     </div>
                     <div class="pager-controls">
-                        Lines per page
+                        Pages
                         <select class="page-size-select" aria-label="Rows per page">
                             ${[5,10,25,50].map(s => `<option value="${s}" ${state.pageSize===s? 'selected':''}>${s}</option>`).join('')}
                         </select>
