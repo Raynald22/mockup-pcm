@@ -54,6 +54,8 @@ async function loadPage(page) {
         DashboardManager.init();
       } else if (page === 'pof') {
         PofManager.init();
+      } else if (page === 'pcv') {
+        PcvManager.init();
       }
 
       // Apply role-based UI after page renders
