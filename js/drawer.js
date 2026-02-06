@@ -12,9 +12,10 @@ const DrawerManager = {
         if (this.btnClose) this.btnClose.onclick = () => this.close();
         if (this.btnCancel) this.btnCancel.onclick = () => this.close();
         if (this.backdrop) {
-            this.backdrop.onclick = (e) => {
-                if (e.target === this.backdrop) this.close();
-            };
+            // Disabled closing on backdrop click as per user request
+            // this.backdrop.onclick = (e) => {
+            //     if (e.target === this.backdrop) this.close();
+            // };
         }
     },
 
@@ -24,7 +25,7 @@ const DrawerManager = {
         this.title.textContent = title || '';
         this.subtitle.textContent = subtitle || '';
         this.content.innerHTML = contentHtml || '';
-        
+
         if (onSave) {
             this.btnSave.onclick = () => {
                 onSave();
