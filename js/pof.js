@@ -1,6 +1,18 @@
 const PofManager = (() => {
     function init() {
         renderTable('pof-table', MOCK_DATA.pofs, pofColumns());
+
+        // Update search input placeholder based on selected category
+        const sel = document.querySelector('.search-category');
+        const input = document.querySelector('.table-search');
+        if (sel && input) {
+            const updatePlaceholder = () => {
+                const label = sel.options[sel.selectedIndex]?.text || '';
+                input.placeholder = label ? `Search ${label}` : 'Search';
+            };
+            updatePlaceholder();
+            sel.addEventListener('change', updatePlaceholder);
+        }
     }
 
     function formatRp(num) {
@@ -20,6 +32,13 @@ const PofManager = (() => {
         return String(val ?? '');
     }
 
+    function formatPaymentStatus(val) {
+        if (val === 'DRAFT') return 'DRAFT';
+        if (val === 'APPROVE_FIN') return 'APPROVED FINANCE';
+        if (val === 'APPROVE_MGT') return 'APPROVED MANAGER';
+        return String(val ?? '');
+    }
+
     function pofColumns() {
         return [
             { key: 'companyName', label: 'Company' },
@@ -28,8 +47,8 @@ const PofManager = (() => {
             { key: 'projectNumber', label: 'Project Number' },
             { key: 'projectName', label: 'Project Name' },
             { key: 'amount', label: 'Amount', format: formatRp  },
-            { key: 'statusDescription', label: 'Status' },
-            { key: 'paymentStatusDesc', label: 'Status Payment' },
+            { key: 'statusDescription', label: 'Status', format: formatPaymentStatus },
+            { key: 'paymentStatusDesc', label: 'Status Payment'},
             { key: 'documentStatus', label: 'Document', format: formatDocumentStatus },
             { key: 'action', label: 'Actions' },
         ];

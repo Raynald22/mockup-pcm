@@ -1,6 +1,18 @@
 const PcvManager = (() => {
     function init() {
         renderTable('pcv-table', MOCK_DATA.pcvs, pcvColumns());
+
+        // Update search input placeholder based on selected category
+        const sel = document.querySelector('.search-category');
+        const input = document.querySelector('.table-search');
+        if (sel && input) {
+            const updatePlaceholder = () => {
+                const label = sel.options[sel.selectedIndex]?.text || '';
+                input.placeholder = label ? `Search ${label}` : 'Search';
+            };
+            updatePlaceholder();
+            sel.addEventListener('change', updatePlaceholder);
+        }
     }
 
     function formatRp(num) {
