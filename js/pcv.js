@@ -272,16 +272,8 @@ function showDeleteConfirmation(onConfirm) {
         modal.className = 'delete-modal-overlay';
         modal.innerHTML = `
             <div class="delete-modal">
-                <div class="delete-modal-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
-                        <path d="M10 11v6"></path>
-                        <path d="M14 11v6"></path>
-                    </svg>
-                </div>
-                <div class="delete-modal-title">Delete Record?</div>
-                <div class="delete-modal-message">Are you sure you want to delete this record? This action cannot be undone.</div>
+                <div class="delete-modal-title">Confirmation</div>
+                <div class="delete-modal-message">Are you sure you want to delete this data?</div>
                 <div class="delete-modal-actions">
                     <button class="btn-cancel" type="button">Cancel</button>
                     <button class="btn-delete" type="button">Delete</button>
