@@ -3,8 +3,8 @@
 .form-horizontal .form-group {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .form-horizontal .form-group label {
@@ -41,7 +41,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 .modal-footer-custom button {
@@ -60,13 +60,14 @@
     background-color: white;
     color: black;
     border: 1px solid var(--drawer-border);
-    padding: 8px 16px;
+    padding: 8px 12px;
     border-radius: 6px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
+    font-size: 0.875rem;
 }
 
 /* Preview Placeholder */

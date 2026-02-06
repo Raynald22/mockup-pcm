@@ -30,7 +30,7 @@ const PofManager = (() => {
                                 
                                 <div class="form-group">
                                     <label for="no_pof">No. POF</label>
-                                    <input type="text" id="no_pof" class="form-control" placeholder="Input POF number">
+                                    <input type="text" id="no_pof" class="form-control">
                                 </div>
 
                                 <div class="form-group">
@@ -40,12 +40,12 @@ const PofManager = (() => {
 
                                 <div class="form-group">
                                     <label for="company_name">Company Name</label>
-                                    <input type="text" id="company_name" class="form-control" placeholder="Input company name">
+                                    <input type="text" id="company_name" class="form-control">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="departement">Departement</label>
-                                    <input type="text" id="departement" class="form-control" placeholder="Input department">
+                                    <input type="text" id="departement" class="form-control">
                                 </div>
 
                                 <div class="form-group">
@@ -56,9 +56,9 @@ const PofManager = (() => {
                                 <div class="form-group">
                                     <label for="project">Project*</label>
                                     <div class="input-with-icon">
-                                        <input type="text" id="project" class="form-control" placeholder="Select project" required>
+                                        <input type="text" id="project" class="form-control">
                                         <button type="button" class="input-icon-btn"
-                                            onclick="LookupManager.open('Lookup Project', 'pages/lookup-project.html', (data) => { document.getElementById('project').value = data.number })">
+                                            onclick="LookupManager.open('Data Project', 'pages/lookup-project.html', (data) => { document.getElementById('project').value = data.number })">
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round">
                                                 <circle cx="11" cy="11" r="8"></circle>
@@ -79,32 +79,43 @@ const PofManager = (() => {
                             <!-- Paid To Panel -->
                             <div class="details-section" style="margin-bottom: 24px;">
                                 <div class="details-section-label">Paid To</div>
-                                
-                                <div class="form-group">
-                                    <label for="bank">Bank</label>
-                                    <select id="bank" class="form-control">
-                                        <option value="">Select Bank</option>
-                                        <option value="BRI">BRI - PT. BANK RAKYAT INDONESIA (PERSERO), Tbk</option>
-                                        <option value="Mandiri">Mandiri - PT. BANK MANDIRI (PERSERO), Tbk</option>
-                                        <option value="BNI">BNI - PT. BANK NEGARA INDONESIA (PERSERO), Tbk</option>
-                                        <option value="BTN">BTN - PT. BANK TABUNGAN NEGARA (PERSERO), Tbk</option>
-                                        <option value="Danamon">Danamon - PT. BANK DANAMON INDONESIA, Tbk</option>
-                                    </select>
-                                </div>
+                                                                <div class="form-group">
+                                            <label for="bank">Bank</label>
+                                            <div id="bank-select" class="searchable-select">
+                                                <div class="select-display">
+                                                    <span class="selected-text">Select Bank</span>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-search-container">
+                                                        <input type="text" class="select-search">
+                                                        <span class="select-search-icon">
+                                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                                <circle cx="11" cy="11" r="8"></circle>
+                                                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                    <div class="select-options">
+                                                        <!-- Options loaded via JS -->
+                                                    </div>
+                                                    <div class="no-results">No banks found</div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                 <div class="form-group">
                                     <label for="account_number">Account Number</label>
-                                    <input type="text" id="account_number" class="form-control" placeholder="Input account number">
+                                    <input type="text" id="account_number" class="form-control">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="account_name">Account Name</label>
-                                    <input type="text" id="account_name" class="form-control" placeholder="Input account name">
+                                    <input type="text" id="account_name" class="form-control">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="amount">Amount to be Paid</label>
-                                    <input type="number" id="amount" class="form-control" placeholder="Input amount">
+                                    <input type="number" id="amount" class="form-control">
                                 </div>
 
                                 <div class="form-group">
@@ -114,7 +125,7 @@ const PofManager = (() => {
 
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <textarea id="description" class="form-control" rows="3" placeholder="Input description"></textarea>
+                                    <textarea id="description" class="form-control" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -134,11 +145,11 @@ const PofManager = (() => {
                                     <table class="details-table">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Account Code</th>
-                                                <th>Description</th>
-                                                <th>Amount</th>
-                                                <th>Actions</th>
+                                                <th class="text-center">No</th>
+                                                <th class="text-left">Account Code</th>
+                                                <th class="text-left">Description</th>
+                                                <th class="text-right">Amount</th>
+                                                <th class="text-center">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody id="pof-details-body">
@@ -158,6 +169,18 @@ const PofManager = (() => {
                         DrawerManager.close();
                     }
                 });
+
+                // Initialize Bank Searchable Select
+                const bankSelectEl = document.getElementById('bank-select');
+                if (bankSelectEl) {
+                    new SearchableSelect(bankSelectEl, [
+                        { value: 'BRI', label: 'BRI - PT. BANK RAKYAT INDONESIA (PERSERO), Tbk' },
+                        { value: 'Mandiri', label: 'Mandiri - PT. BANK MANDIRI (PERSERO), Tbk' },
+                        { value: 'BNI', label: 'BNI - PT. BANK NEGARA INDONESIA (PERSERO), Tbk' },
+                        { value: 'BTN', label: 'BTN - PT. BANK TABUNGAN NEGARA (PERSERO), Tbk' },
+                        { value: 'Danamon', label: 'Danamon - PT. BANK DANAMON INDONESIA, Tbk' }
+                    ]);
+                }
 
                 // Attach logic for POF Details after drawer opens
                 const detailsBody = document.getElementById('pof-details-body');
@@ -180,11 +203,11 @@ const PofManager = (() => {
 
                     detailsBody.innerHTML = detailsData.map((item, index) => `
                         <tr>
-                            <td>${index + 1}</td>
-                            <td>${item.code}</td>
-                            <td>${item.desc}</td>
-                            <td>Rp.${item.amount.toLocaleString('id-ID')}.00</td>
-                            <td>
+                            <td class="text-center">${index + 1}</td>
+                            <td class="text-left">${item.code}</td>
+                            <td class="text-left">${item.desc}</td>
+                            <td class="text-right">Rp.${item.amount.toLocaleString('id-ID')}.00</td>
+                            <td class="text-center">
                                 <button type="button" class="btn-action-view" title="View">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
@@ -198,7 +221,28 @@ const PofManager = (() => {
 
                 if (addAccountBtn) {
                     addAccountBtn.onclick = () => {
-                        LookupManager.open('Input Account POF', 'pages/input-account-pof.html');
+                        LookupManager.open('Input Account POF', 'pages/input-account-pof.html', () => {
+                            // This callback runs after modal content is loaded
+                            const accSelectEl = document.getElementById('account-code-select');
+                            const accCodeInput = document.getElementById('acc_code');
+                            const accDescInput = document.getElementById('acc_desc');
+
+                            if (accSelectEl) {
+                                const accSelect = new SearchableSelect(accSelectEl, [
+                                    { value: 'A013', label: 'A013 - Hardware' },
+                                    { value: 'A012', label: 'A012 - Software' },
+                                    { value: 'A014', label: 'A014 - Entertainment' },
+                                    { value: 'A015', label: 'A015 - Transport' },
+                                    { value: 'A016', label: 'A016 - Communication' }
+                                ]);
+
+                                accSelectEl.addEventListener('change', (e) => {
+                                    const { value } = e.detail;
+                                    accCodeInput.value = value;
+                                    // Description is now left for manual input by the user
+                                });
+                            }
+                        });
                     };
                 }
 
@@ -434,7 +478,7 @@ const PofManager = (() => {
                 const row = item.closest('tr');
                 if (!row) return;
                 const rowIndex = Array.from(row.parentElement.children).indexOf(row);
-                
+
                 // Show confirmation dialog for delete action
                 if (action === 'delete') {
                     showDeleteConfirmation(() => {
@@ -444,7 +488,7 @@ const PofManager = (() => {
                     // Note to Cindy: tambahin action lainnya di sini ya cin
                     console.log('POF action', action, 'on row', rowIndex);
                 }
-                
+
                 // close dropdown after action
                 const dd = item.closest('.action-dropdown');
                 if (dd) dd.classList.remove('show');
