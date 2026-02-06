@@ -320,3 +320,52 @@
 .delete-modal-actions .btn-delete:hover {
     background: #d32f2f;
 }
+
+/* Status Pills/Badges */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.status-pill.paid {
+    background: #c6f6d5;
+    color: #22543d;
+}
+.status-pill.paid::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #22863a;
+    border-radius: 50%;
+}
+.status-pill.issued {
+    background: #dbeafe;
+    color: #1e3a8a;
+}
+.status-pill.issued::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #2563eb;
+    border-radius: 50%;
+}
+.status-pill.upcoming {
+    background: #fef3c7;
+    color: #78350f;
+}
+.status-pill.upcoming::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #f59e0b;
+    border-radius: 50%;
+}
+

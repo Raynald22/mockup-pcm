@@ -72,6 +72,7 @@ const PofManager = (() => {
                                     <label for="approved_to">Approved To</label>
                                     <select id="approved_to" class="form-control">
                                         <option value="">Select approver</option>
+                                        <option value="damian">Damian</option>
                                     </select>
                                 </div>
                             </div>
@@ -221,7 +222,7 @@ const PofManager = (() => {
 
                 if (addAccountBtn) {
                     addAccountBtn.onclick = () => {
-                        LookupManager.open('Input Account POF', 'pages/input-account-pof.html', () => {
+                        LookupManager.open('Input Account POF', 'pages/input-account-pof.html', null, () => {
                             // This callback runs after modal content is loaded
                             const accSelectEl = document.getElementById('account-code-select');
                             const accCodeInput = document.getElementById('acc_code');
@@ -290,6 +291,15 @@ const PofManager = (() => {
         return String(val ?? '');
     }
 
+    function formatPaymentStatusPill(val) {
+        const text = String(val ?? '');
+        const lowerText = text.toLowerCase();
+        let pillClass = 'upcoming';
+        if (lowerText.includes('paid')) pillClass = 'paid';
+        else if (lowerText.includes('issued')) pillClass = 'issued';
+        return `<span class="status-pill ${pillClass}">${text}</span>`;
+    }
+
     function pofColumns() {
         return [
             { key: 'companyName', label: 'Company' },
@@ -299,7 +309,7 @@ const PofManager = (() => {
             { key: 'projectName', label: 'Project Name' },
             { key: 'amount', label: 'Amount', format: formatRp },
             { key: 'statusDescription', label: 'Status', format: formatPaymentStatus },
-            { key: 'paymentStatusDesc', label: 'Status Payment' },
+            { key: 'paymentStatusDesc', label: 'Status Payment', format: formatPaymentStatusPill },
             { key: 'documentStatus', label: 'Document', format: formatDocumentStatus },
             { key: 'action', label: 'Actions' },
         ];
