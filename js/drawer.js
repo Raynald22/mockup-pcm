@@ -53,13 +53,14 @@ const LookupManager = {
         this.container = document.getElementById('lookup-modal-container');
 
         if (this.backdrop) {
-            this.backdrop.addEventListener('click', (e) => {
-                if (e.target === this.backdrop) this.close();
-            });
+            // Disabled closing on backdrop click as per user request
+            // this.backdrop.addEventListener('click', (e) => {
+            //     if (e.target === this.backdrop) this.close();
+            // });
         }
     },
 
-    async open(title, contentUrl, onLoaded, callback) {
+    async open(title, contentUrl, callback, onLoaded) {
         if (!this.backdrop) this.init();
 
         this.callback = callback;
@@ -76,7 +77,7 @@ const LookupManager = {
 
             this.setupEvents();
 
-            // Call onLoaded callback if provided
+            // Call onLoaded callback if provided (Initialization hook)
             if (onLoaded && typeof onLoaded === 'function') {
                 onLoaded();
             }
@@ -96,7 +97,7 @@ const LookupManager = {
         // Handle row selection
         const rows = this.container.querySelectorAll('.lookup-table tbody tr');
         rows.forEach(row => {
-            row.addEventListener('click', () => {
+            row.addEventListener('dblclick', () => {
                 const data = JSON.parse(row.dataset.item || '{}');
                 if (this.callback) this.callback(data);
                 this.close();

@@ -72,6 +72,7 @@ const PofManager = (() => {
                                     <label for="approved_to">Approved To</label>
                                     <select id="approved_to" class="form-control">
                                         <option value="">Select approver</option>
+                                        <option value="damian">Damian</option>
                                     </select>
                                 </div>
                             </div>
@@ -221,7 +222,7 @@ const PofManager = (() => {
 
                 if (addAccountBtn) {
                     addAccountBtn.onclick = () => {
-                        LookupManager.open('Input Account POF', 'pages/input-account-pof.html', () => {
+                        LookupManager.open('Input Account POF', 'pages/input-account-pof.html', null, () => {
                             // This callback runs after modal content is loaded
                             const accSelectEl = document.getElementById('account-code-select');
                             const accCodeInput = document.getElementById('acc_code');
