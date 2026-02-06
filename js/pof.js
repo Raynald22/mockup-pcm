@@ -20,7 +20,7 @@ const PofManager = (() => {
             addBtn.onclick = () => {
                 DrawerManager.open({
                     title: 'Input POF (Payment Order Form)',
-                    subtitle: 'Isi form untuk membuat petty cash voucher baru.',
+                    subtitle: 'Isi form untuk membuat payment order baru.',
                     contentHtml: `
                         <form id="pcv-form">
                             <div class="drawer-card">
@@ -242,6 +242,67 @@ const PofManager = (() => {
                                     const { value } = e.detail;
                                     accCodeInput.value = value;
                                     // Description is now left for manual input by the user
+                                });
+                            }
+
+                            // File selection and preview logic
+                            const fileInput = document.getElementById('file-upload-input');
+                            const previewContainer = document.getElementById('file-preview-container');
+
+                            if (fileInput && previewContainer) {
+                                fileInput.addEventListener('change', (e) => {
+                                    const files = Array.from(e.target.files);
+                                    previewContainer.style.display = 'flex';
+                                    previewContainer.style.flexWrap = 'wrap';
+                                    previewContainer.style.gap = '12px';
+                                    previewContainer.style.marginTop = '8px';
+
+                                    if (files.length === 0) {
+                                        previewContainer.innerHTML = 'Belum ada file terpilih';
+                                        return;
+                                    }
+
+                                    // Limit to 3 files
+                                    const selectedFiles = files.slice(0, 3);
+                                    previewContainer.innerHTML = ''; // Clear previous
+
+                                    selectedFiles.forEach(file => {
+                                        const reader = new FileReader();
+                                        const fileWrapper = document.createElement('div');
+                                        fileWrapper.style.cssText = 'width: 80px; display: flex; flex-direction: column; align-items: center; gap: 4px;';
+
+                                        const isImage = file.type.startsWith('image/');
+                                        const size = (file.size / (1024 * 1024)).toFixed(2);
+
+                                        if (isImage) {
+                                            const img = document.createElement('img');
+                                            img.style.cssText = 'width: 80px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid #e2e8f0;';
+                                            img.src = URL.createObjectURL(file);
+                                            fileWrapper.appendChild(img);
+                                        } else {
+                                            const icon = document.createElement('div');
+                                            icon.style.cssText = 'width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 6px; border: 1px solid #e2e8f0;';
+                                            icon.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+                                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                                <polyline points="13 2 13 9 20 9"></polyline>
+                                            </svg>`;
+                                            fileWrapper.appendChild(icon);
+                                        }
+
+                                        const info = document.createElement('div');
+                                        info.style.cssText = 'font-size: 0.65rem; color: #475569; text-align: center; width: 100%; word-break: break-all;';
+                                        info.innerHTML = `<strong>${file.name}</strong><br>(${size} MB)`;
+                                        fileWrapper.appendChild(info);
+
+                                        previewContainer.appendChild(fileWrapper);
+                                    });
+
+                                    if (files.length > 3) {
+                                        const msg = document.createElement('div');
+                                        msg.style.cssText = 'color: #ef4444; font-size: 0.75rem; width: 100%; margin-top: 4px; font-style: italic;';
+                                        msg.textContent = '* Maksimal 3 file, file lainnya diabaikan.';
+                                        previewContainer.appendChild(msg);
+                                    }
                                 });
                             }
                         });
