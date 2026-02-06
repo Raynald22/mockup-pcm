@@ -46,7 +46,7 @@ async function loadPage(page) {
   }
 
   try {
-    main.style.opacity = 0;
+    main.innerHTML = '<div class="page-loader"><div class="spinner"></div></div>';
 
     const res = await fetch(pages[page]);
 

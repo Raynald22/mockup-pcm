@@ -254,6 +254,14 @@
     color: #1f2937;
 }
 
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 48px 16px;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
 /* Confirmation Modal Styles */
 .delete-modal-overlay {
     display: none;

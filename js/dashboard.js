@@ -127,13 +127,15 @@ const DashboardManager = (() => {
             const displayData = data.slice((page - 1) * pageSize, page * pageSize);
 
             const thead = columns.map(c => `<th>${c.label}</th>`).join('');
-            const tbody = displayData.map(row => {
-                const cells = columns.map(c => {
-                    const val = c.format ? c.format(row[c.key]) : row[c.key];
-                    return `<td>${val}</td>`;
+            const tbody = data.length === 0
+                ? `<tr><td colspan="${columns.length}" class="empty-state">Tidak ada data</td></tr>`
+                : displayData.map(row => {
+                    const cells = columns.map(c => {
+                        const val = c.format ? c.format(row[c.key]) : row[c.key];
+                        return `<td>${val}</td>`;
+                    }).join('');
+                    return `<tr>${cells}</tr>`;
                 }).join('');
-                return `<tr>${cells}</tr>`;
-            }).join('');
 
             const windowSize = 5;
             let startPage = Math.max(1, page - Math.floor(windowSize / 2));

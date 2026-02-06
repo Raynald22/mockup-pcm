@@ -168,6 +168,7 @@ const PofManager = (() => {
                     onSave: () => {
                         console.log('Saving POF data...');
                         DrawerManager.close();
+                        ToastManager.show('POF berhasil disimpan', 'success');
                     }
                 });
 
@@ -332,7 +333,9 @@ const PofManager = (() => {
 
         const thead = columns.map(c => `<th>${c.label}</th>`).join('');
         const pageData = data.slice(start, end);
-        const tbody = pageData.map((row, i) => {
+        const tbody = data.length === 0
+            ? `<tr><td colspan="${columns.length}" class="empty-state">Tidak ada data</td></tr>`
+            : pageData.map((row, i) => {
             const cells = columns.map(c => {
                 let val = c.format ? c.format(row[c.key]) : row[c.key];
                 if (c.label === "Actions") {
@@ -365,7 +368,7 @@ const PofManager = (() => {
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path></svg>
                                 Delete
                             </button>
-                            
+
                         </div>
                     </div>`;
                 }
@@ -493,6 +496,7 @@ const PofManager = (() => {
                 if (action === 'delete') {
                     showDeleteConfirmation(() => {
                         console.log('POF action', action, 'on row', rowIndex);
+                        ToastManager.show('POF berhasil dihapus', 'success');
                     });
                 } else {
                     // Note to Cindy: tambahin action lainnya di sini ya cin
