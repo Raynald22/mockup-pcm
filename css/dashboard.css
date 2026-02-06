@@ -60,7 +60,7 @@
 .progress-bar {
     display: flex;
     height: 40px;
-    border-radius: 10px;
+    border-radius: 9999px;
     overflow: hidden;
     background: var(--color-border);
     position: relative;
