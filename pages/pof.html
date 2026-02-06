@@ -1,4 +1,30 @@
-<div class="content-placeholder">
+<div class="page-header">
     <h1>POF (Payment Order Form)</h1>
-    <p>Ini halaman POF dari pof.html</p>
+    <p>Total Amount > Rp 1.000.000</p>
+</div>
+
+<div>
+    <div class="card table-card">
+        <div class="table-toolbar">
+            <div class="search-wrap">
+                <select class="search-category" aria-label="Search category">
+                    <option value="companyName">Company</option>
+                    <option value="projectNumber">Project Number</option>
+                    <option value="costNumber">POF Number</option>
+                    <option value="projectName">Project Name</option>
+                </select>
+                <input type="text" class="table-search" placeholder="Search POF" />
+                <button class="search-btn" type="button" aria-label="Search">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+            <div class="table-actions">
+                <button class="add-pof-btn" type="button">+ Add POF</button>
+            </div>
+        </div>
+
+        <div id="pof-table"></div>
+
+    </div>
+</div>
 </div>

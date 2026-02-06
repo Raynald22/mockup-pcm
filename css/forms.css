@@ -1,0 +1,77 @@
+/* Nested Modal & Horizontal Form Styles */
+
+.form-horizontal .form-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.form-horizontal .form-group label {
+    width: 120px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+    color: var(--color-text-primary);
+}
+
+.form-horizontal .form-control {
+    flex: 1;
+}
+
+/* Specific Button Colors for Modals */
+.btn-save-modal {
+    background-color: var(--color-primary) !important;
+    /* Blue */
+    color: white !important;
+}
+
+.btn-cancel-modal {
+    background-color: #374151 !important;
+    /* Dark Grey */
+    color: white !important;
+}
+
+.btn-back-modal {
+    background-color: #F87171 !important;
+    /* Red/Coral */
+    color: white !important;
+}
+
+.modal-footer-custom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.modal-footer-custom button {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Browse Button Styling */
+.btn-browse {
+    background-color: white;
+    color: black;
+    border: 1px solid var(--drawer-border);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+/* Preview Placeholder */
+.preview-text {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    margin-top: 8px;
+}

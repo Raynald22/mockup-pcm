@@ -52,6 +52,10 @@ async function loadPage(page) {
       // Re-initialize dashboard scripts if we are on the dashboard
       if (page === 'dashboard') {
         DashboardManager.init();
+      } else if (page === 'pof') {
+        PofManager.init();
+      } else if (page === 'pcv') {
+        PcvManager.init();
       }
 
       // Apply role-based UI after page renders
