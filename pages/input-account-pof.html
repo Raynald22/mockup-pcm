@@ -1,0 +1,79 @@
+<div class="lookup-modal" style="width: 700px; height: auto;">
+    <div class="lookup-header">
+        <h2 id="lookup-title">Input Account POF</h2>
+        <button class="btn-close-lookup" onclick="LookupManager.close()">×</button>
+    </div>
+    <div class="lookup-body">
+        <form class="form-horizontal" id="input-account-form">
+            <div class="form-group">
+                <label>Account Code</label>
+                <div class="input-with-icon" style="flex: 1;">
+                    <input type="text" id="acc_code" class="form-control" readonly placeholder="">
+                    <button type="button" class="input-icon-btn"
+                        style="background: var(--color-primary); color: white; border-radius: 0 12px 12px 0; height: 100%; width: 45px; right: 0;"
+                        onclick="LookupManager.open('Lookup Account', 'pages/lookup-account.html', (data) => { document.getElementById('acc_code').value = data.number; document.getElementById('acc_desc').value = data.name; })">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" id="acc_desc" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="text" id="acc_amount" class="form-control" value="Rp 0,00">
+            </div>
+
+            <div class="form-group">
+                <label>Upload Doc</label>
+                <button type="button" class="btn-browse">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Browse
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label>Preview</label>
+                <div class="preview-text">Preview</div>
+            </div>
+
+            <div class="modal-footer-custom">
+                <button type="button" class="btn-save-modal" onclick="PofManager.addAccountFromModal()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Save
+                </button>
+                <button type="button" class="btn-cancel-modal" onclick="LookupManager.close()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    Cancel
+                </button>
+                <button type="button" class="btn-back-modal" onclick="LookupManager.close()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Back
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

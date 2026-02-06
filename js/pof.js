@@ -82,6 +82,11 @@ const PofManager = (() => {
                                     <label for="bank">Bank</label>
                                     <select id="bank" class="form-control">
                                         <option value="">Select Bank</option>
+                                        <option value="BRI">BRI - PT. BANK RAKYAT INDONESIA (PERSERO), Tbk</option>
+                                        <option value="Mandiri">Mandiri - PT. BANK MANDIRI (PERSERO), Tbk</option>
+                                        <option value="BNI">BNI - PT. BANK NEGARA INDONESIA (PERSERO), Tbk</option>
+                                        <option value="BTN">BTN - PT. BANK TABUNGAN NEGARA (PERSERO), Tbk</option>
+                                        <option value="Danamon">Danamon - PT. BANK DANAMON INDONESIA, Tbk</option>
                                     </select>
                                 </div>
 
@@ -109,15 +114,106 @@ const PofManager = (() => {
                                     <label for="description">Description</label>
                                     <textarea id="description" class="form-control" rows="3" placeholder="Input description"></textarea>
                                 </div>
+
+                                <!-- POF Details Section -->
+                                <div class="details-section">
+                                    <div class="details-section-label">POF Details</div>
+                                    <div class="details-header">
+                                        <button type="button" class="btn-add-detail" id="btn-add-account-code">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            </svg>
+                                            Account Code
+                                        </button>
+                                    </div>
+                                    <div class="details-table-container">
+                                        <table class="details-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Account Code</th>
+                                                    <th>Description</th>
+                                                    <th>Amount</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="pof-details-body">
+                                                <tr class="empty-row">
+                                                    <td colspan="5">Data Kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     `,
                     onSave: () => {
                         console.log('Saving POF data...');
-                        // Implement save logic here if needed
                         DrawerManager.close();
                     }
                 });
+
+                // Attach logic for POF Details after drawer opens
+                const detailsBody = document.getElementById('pof-details-body');
+                const addAccountBtn = document.getElementById('btn-add-account-code');
+                let detailsData = [{
+                    code: 'A013 - Hardware',
+                    desc: 'CPU',
+                    amount: 350000
+                }];
+
+                const renderDetails = () => {
+                    if (detailsData.length === 0) {
+                        detailsBody.innerHTML = `
+                            <tr class="empty-row">
+                                <td colspan="5">Data Kosong</td>
+                            </tr>
+                        `;
+                        return;
+                    }
+
+                    detailsBody.innerHTML = detailsData.map((item, index) => `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${item.code}</td>
+                            <td>${item.desc}</td>
+                            <td>Rp.${item.amount.toLocaleString('id-ID')}.00</td>
+                            <td>
+                                <button type="button" class="btn-action-view" title="View">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
+                };
+
+                if (addAccountBtn) {
+                    addAccountBtn.onclick = () => {
+                        LookupManager.open('Input Account POF', 'pages/input-account-pof.html');
+                    };
+                }
+
+                // Render initial dummy data
+                renderDetails();
+
+                // Global function for the modal to call
+                PofManager.addAccountFromModal = () => {
+                    const code = document.getElementById('acc_code').value;
+                    const desc = document.getElementById('acc_desc').value;
+                    const amountStr = document.getElementById('acc_amount').value;
+                    const amount = parseInt(amountStr.replace(/[^0-9]/g, '')) || 0;
+
+                    if (code && desc) {
+                        detailsData.push({ code, desc, amount });
+                        renderDetails();
+                        LookupManager.close();
+                    }
+                };
             };
         }
     }
