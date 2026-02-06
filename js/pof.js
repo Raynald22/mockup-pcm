@@ -291,6 +291,15 @@ const PofManager = (() => {
         return String(val ?? '');
     }
 
+    function formatPaymentStatusPill(val) {
+        const text = String(val ?? '');
+        const lowerText = text.toLowerCase();
+        let pillClass = 'upcoming';
+        if (lowerText.includes('paid')) pillClass = 'paid';
+        else if (lowerText.includes('issued')) pillClass = 'issued';
+        return `<span class="status-pill ${pillClass}">${text}</span>`;
+    }
+
     function pofColumns() {
         return [
             { key: 'companyName', label: 'Company' },
@@ -300,7 +309,7 @@ const PofManager = (() => {
             { key: 'projectName', label: 'Project Name' },
             { key: 'amount', label: 'Amount', format: formatRp },
             { key: 'statusDescription', label: 'Status', format: formatPaymentStatus },
-            { key: 'paymentStatusDesc', label: 'Status Payment' },
+            { key: 'paymentStatusDesc', label: 'Status Payment', format: formatPaymentStatusPill },
             { key: 'documentStatus', label: 'Document', format: formatDocumentStatus },
             { key: 'action', label: 'Actions' },
         ];
@@ -405,7 +414,7 @@ const PofManager = (() => {
                     <div class="pager-controls">
                         Pages
                         <select class="page-size-select" aria-label="Rows per page">
-                            ${[5, 10, 25, 50].map(s => `<option value="${s}" ${state.pageSize === s ? 'selected' : ''}>${s}</option>`).join('')}
+                            ${[5, 10, 25, 100].map(s => `<option value="${s}" ${state.pageSize === s ? 'selected' : ''}>${s}</option>`).join('')}
                         </select>
                     </div>
                 </div>

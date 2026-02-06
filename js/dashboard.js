@@ -118,11 +118,13 @@ const DashboardManager = (() => {
         const el = document.getElementById(id);
         if (!el) return;
 
-        const perPageOptions = [5, 10, 15, 20];
-        let rowsPerPage = defaultPerPage;
+        let page = 1;
+        let pageSize = defaultPerPage;
 
         function render() {
-            const displayData = data.slice(0, rowsPerPage);
+            const totalPages = Math.max(1, Math.ceil(data.length / pageSize));
+            if (page > totalPages) page = totalPages;
+            const displayData = data.slice((page - 1) * pageSize, page * pageSize);
 
             const thead = columns.map(c => `<th>${c.label}</th>`).join('');
             const tbody = displayData.map(row => {
@@ -133,9 +135,14 @@ const DashboardManager = (() => {
                 return `<tr>${cells}</tr>`;
             }).join('');
 
-            const perPageSelect = perPageOptions.map(n =>
-                `<option value="${n}" ${n === rowsPerPage ? 'selected' : ''}>${n}</option>`
-            ).join('');
+            const windowSize = 5;
+            let startPage = Math.max(1, page - Math.floor(windowSize / 2));
+            let endPage = Math.min(totalPages, startPage + windowSize - 1);
+            if (endPage - startPage + 1 < windowSize) startPage = Math.max(1, endPage - windowSize + 1);
+            const pageButtons = [];
+            for (let p = startPage; p <= endPage; p++) {
+                pageButtons.push(`<button class="pager-btn pager-page ${page === p ? 'current' : ''}" data-page="${p}" aria-label="Page ${p}">${p}</button>`);
+            }
 
             el.innerHTML = `
                 <table>
@@ -143,19 +150,30 @@ const DashboardManager = (() => {
                     <tbody>${tbody}</tbody>
                 </table>
                 <div class="table-footer">
-                    <div class="table-footer-left">
-                        <span class="per-page-label">Tampilkan</span>
-                        <select class="per-page-select">${perPageSelect}</select>
-                        <span class="per-page-label">baris</span>
+                    <div class="table-pager">
+                        
+                        <div class="pager-controls">
+                            per page
+                            <select class="page-size-select" aria-label="Rows per page">
+                                ${[5, 10, 25, 100].map(s => `<option value="${s}" ${pageSize === s ? 'selected' : ''}>${s}</option>`).join('')}
+                            </select>
+                        </div>
                     </div>
-                    <span class="table-info">Menampilkan ${displayData.length} dari ${data.length}</span>
                 </div>
             `;
 
-            el.querySelector('.per-page-select')?.addEventListener('change', (e) => {
-                rowsPerPage = parseInt(e.target.value);
+            el.querySelector('.page-size-select')?.addEventListener('change', (e) => {
+                pageSize = parseInt(e.target.value);
+                page = 1;
                 render();
             });
+            el.querySelectorAll('.pager-page').forEach(btn => {
+                btn.addEventListener('click', () => { page = parseInt(btn.dataset.page); render(); });
+            });
+            el.querySelector('.pager-first')?.addEventListener('click', () => { page = 1; render(); });
+            el.querySelector('.pager-prev')?.addEventListener('click', () => { if (page > 1) { page--; render(); } });
+            el.querySelector('.pager-next')?.addEventListener('click', () => { if (page < totalPages) { page++; render(); } });
+            el.querySelector('.pager-last')?.addEventListener('click', () => { page = totalPages; render(); });
         }
 
         render();
